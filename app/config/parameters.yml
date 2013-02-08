@@ -1,0 +1,15 @@
+parameters:
+    database_driver:   mysql
+    database_host:     localhost
+    database_port:     ~
+    database_name:     bsg
+    database_user:     bsg
+    database_password: bsg+-*/
+
+    mailer_transport:  smtp
+    mailer_host:       127.0.0.1
+    mailer_user:       ~
+    mailer_password:   ~
+
+    locale:            en
+    secret:            cba573f5bf73f39f73eaffb3034a5294
