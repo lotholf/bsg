@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database name="default" namespace="Bsg\GameBundle\Model" defaultIdMethod="native">
+
+    <table name="character">
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+        <column name="name" type="varchar" primaryString="1" size="40" />
+        <column name="power" type="varchar" size="40" />
+        <column name="power_one_per_game" type="varchar" size="40" />
+        <column name="drawback" type="varchar" size="40" />
+    </table>
+
+</database>
