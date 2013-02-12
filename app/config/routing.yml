@@ -1,3 +1,7 @@
+bsg_user:
+    resource: "@BsgUserBundle/Resources/config/routing.yml"
+    prefix:   /
+
 bsg_game:
     resource: "@BsgGameBundle/Resources/config/routing.yml"
     prefix:   /

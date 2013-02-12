@@ -1,0 +1,7 @@
+parameters:
+#    bsg_user.example.class: Bsg\UserBundle\Example
+
+services:
+#    bsg_user.example:
+#        class: %bsg_user.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

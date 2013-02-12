@@ -21,6 +21,7 @@ class AppKernel extends Kernel
             new Propel\PropelBundle\PropelBundle(),
             new Bsg\GameBundle\BsgGameBundle(),
             new FOS\UserBundle\FOSUserBundle(),
+            new Bsg\UserBundle\BsgUserBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
