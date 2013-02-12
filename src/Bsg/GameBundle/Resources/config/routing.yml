@@ -1,3 +1,7 @@
 bsg_game_homepage:
+    pattern:  /
+    defaults: { _controller: BsgGameBundle:Home:index }
+
+bsg_game_hellopage:
     pattern:  /index/{name}
     defaults: { _controller: BsgGameBundle:Default:index }
