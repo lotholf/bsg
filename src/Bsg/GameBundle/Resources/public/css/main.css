@@ -1,3 +1,36 @@
+/* General */
 body {
     background-color: red;
+    margin: 0px;
+    text-align: center;
+}
+
+header#user-bar {
+    background-color: grey;
+    height: 30px;
+}
+
+section#game {
+    background-color: purple;
+    height: 500px;
+}
+
+div#board {
+    display: inline-block;
+    background-color: blue;
+    height: 100%;
+    width: 700px;
+}
+
+aside#game-bar {
+    display: inline-block;
+    position: relative;
+    background-color: black;
+    width: 300px;
+    height: 100%;
+}
+
+section#chat {
+    background-color: white;
+    height: 190px;
 }

@@ -1,6 +1,29 @@
-{% block stylesheets %}
-    {{ parent() }}
+{% extends '::base.html.twig' %}
 
-    <link href="{{ asset('/css/main.css') }}" type="text/css" rel="stylesheet" />
+{% block stylesheets %}
+    <link href="{{ asset('bundles/bsggame/css/main.css') }}" type="text/css" rel="stylesheet" />
 {% endblock %}
-Bienvenue sur BSG, Joueur !!
+
+{% block body %}
+    <header id="user-bar">
+        {% block userBar %}
+        {% endblock %}
+    </header>
+
+    <section id="game">
+        <div id="board">
+            {% block board %}
+            {% endblock %}
+        </div>
+
+        <aside id="game-bar">
+            {% block gameBar %}
+            {% endblock %}
+        </aside>
+    </section>
+
+    <section id="chat">
+        {% block chat %}
+        {% endblock %}
+    </section>
+{% endblock %}
