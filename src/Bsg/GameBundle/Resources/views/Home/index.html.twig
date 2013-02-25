@@ -10,16 +10,14 @@
         {% endblock %}
     </header>
 
-    <section id="game">
-        <div id="board">
-            {% block board %}
-            {% endblock %}
-        </div>
+    <section id="game-bar">
+        {% block gameBar %}
+        {% endblock %}
+    </section>
 
-        <aside id="game-bar">
-            {% block gameBar %}
-            {% endblock %}
-        </aside>
+    <section id="board">
+        {% block board %}
+        {% endblock %}
     </section>
 
     <section id="chat">
