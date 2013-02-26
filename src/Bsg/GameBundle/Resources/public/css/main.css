@@ -1,11 +1,11 @@
 /* General */
 body {
-    background-color: red;
     margin: 0px;
     text-align: center;
 }
 
 header#user-bar {
+    text-align: right;
     background-color: grey;
     height: 30px;
 }
@@ -23,6 +23,6 @@ section#game-bar {
 }
 
 section#chat {
-    background-color: white;
+    background-color: red;
     height: 150px;
 }
