@@ -1,3 +1,0 @@
-bsg_user_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: BsgUserBundle:Default:index }

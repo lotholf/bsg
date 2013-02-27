@@ -1,0 +1,23 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+    <link href="{{ asset('bundles/bsggame/css/main.css') }}" type="text/css" rel="stylesheet" />
+{% endblock %}
+
+{% block body %}
+    <section id="game-bar">
+        {% block gameBar %}
+        {% endblock %}
+    </section>
+
+    <section id="board">
+        {% block board %}
+            Bienvenue dans la partie {{game_id}}
+        {% endblock %}
+    </section>
+
+    <section id="chat">
+        {% block chat %}
+        {% endblock %}
+    </section>
+{% endblock %}
