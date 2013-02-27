@@ -16,7 +16,63 @@ CREATE TABLE `character`
     `power` VARCHAR(40),
     `power_one_per_game` VARCHAR(40),
     `drawback` VARCHAR(40),
+    `cards` VARCHAR(40),
+    `role` VARCHAR(40),
+    `amiral_order` INTEGER,
+    `president_order` INTEGER,
+    `cag_order` INTEGER,
     PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+-- ---------------------------------------------------------------------
+-- game
+-- ---------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `game`;
+
+CREATE TABLE `game`
+(
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(40),
+    `fuel` INTEGER,
+    `food` INTEGER,
+    `morale` INTEGER,
+    `population` INTEGER,
+    `distance` INTEGER,
+    `jump` INTEGER,
+    `is_completed` TINYINT(1),
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+-- ---------------------------------------------------------------------
+-- game_player
+-- ---------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `game_player`;
+
+CREATE TABLE `game_player`
+(
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `game_id` INTEGER NOT NULL,
+    `user_id` INTEGER NOT NULL,
+    `character_id` INTEGER,
+    `is_amiral` TINYINT(1),
+    `is_president` TINYINT(1),
+    `is_cag` TINYINT(1),
+    `is_alive` TINYINT(1),
+    PRIMARY KEY (`id`),
+    INDEX `game_player_FI_1` (`game_id`),
+    INDEX `game_player_FI_2` (`user_id`),
+    INDEX `game_player_FI_3` (`character_id`),
+    CONSTRAINT `game_player_FK_1`
+        FOREIGN KEY (`game_id`)
+        REFERENCES `game` (`id`),
+    CONSTRAINT `game_player_FK_2`
+        FOREIGN KEY (`user_id`)
+        REFERENCES `fos_user` (`id`),
+    CONSTRAINT `game_player_FK_3`
+        FOREIGN KEY (`character_id`)
+        REFERENCES `character` (`id`)
 ) ENGINE=InnoDB;
 
 -- ---------------------------------------------------------------------

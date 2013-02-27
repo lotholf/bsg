@@ -9,72 +9,69 @@ use \PDOStatement;
 use \Propel;
 use \PropelException;
 use \PropelPDO;
-use Bsg\GameBundle\Model\Character;
-use Bsg\GameBundle\Model\CharacterPeer;
-use Bsg\GameBundle\Model\map\CharacterTableMap;
+use Bsg\GameBundle\Model\Game;
+use Bsg\GameBundle\Model\GamePeer;
+use Bsg\GameBundle\Model\map\GameTableMap;
 
-abstract class BaseCharacterPeer
+abstract class BaseGamePeer
 {
 
     /** the default database name for this class */
     const DATABASE_NAME = 'default';
 
     /** the table name for this class */
-    const TABLE_NAME = 'character';
+    const TABLE_NAME = 'game';
 
     /** the related Propel class for this table */
-    const OM_CLASS = 'Bsg\\GameBundle\\Model\\Character';
+    const OM_CLASS = 'Bsg\\GameBundle\\Model\\Game';
 
     /** the related TableMap class for this table */
-    const TM_CLASS = 'CharacterTableMap';
+    const TM_CLASS = 'GameTableMap';
 
     /** The total number of columns. */
-    const NUM_COLUMNS = 10;
+    const NUM_COLUMNS = 9;
 
     /** The number of lazy-loaded columns. */
     const NUM_LAZY_LOAD_COLUMNS = 0;
 
     /** The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS) */
-    const NUM_HYDRATE_COLUMNS = 10;
+    const NUM_HYDRATE_COLUMNS = 9;
 
     /** the column name for the ID field */
-    const ID = 'character.ID';
+    const ID = 'game.ID';
 
     /** the column name for the NAME field */
-    const NAME = 'character.NAME';
+    const NAME = 'game.NAME';
 
-    /** the column name for the POWER field */
-    const POWER = 'character.POWER';
+    /** the column name for the FUEL field */
+    const FUEL = 'game.FUEL';
 
-    /** the column name for the POWER_ONE_PER_GAME field */
-    const POWER_ONE_PER_GAME = 'character.POWER_ONE_PER_GAME';
+    /** the column name for the FOOD field */
+    const FOOD = 'game.FOOD';
 
-    /** the column name for the DRAWBACK field */
-    const DRAWBACK = 'character.DRAWBACK';
+    /** the column name for the MORALE field */
+    const MORALE = 'game.MORALE';
 
-    /** the column name for the CARDS field */
-    const CARDS = 'character.CARDS';
+    /** the column name for the POPULATION field */
+    const POPULATION = 'game.POPULATION';
 
-    /** the column name for the ROLE field */
-    const ROLE = 'character.ROLE';
+    /** the column name for the DISTANCE field */
+    const DISTANCE = 'game.DISTANCE';
 
-    /** the column name for the AMIRAL_ORDER field */
-    const AMIRAL_ORDER = 'character.AMIRAL_ORDER';
+    /** the column name for the JUMP field */
+    const JUMP = 'game.JUMP';
 
-    /** the column name for the PRESIDENT_ORDER field */
-    const PRESIDENT_ORDER = 'character.PRESIDENT_ORDER';
-
-    /** the column name for the CAG_ORDER field */
-    const CAG_ORDER = 'character.CAG_ORDER';
+    /** the column name for the IS_COMPLETED field */
+    const IS_COMPLETED = 'game.IS_COMPLETED';
 
     /** The default string format for model objects of the related table **/
     const DEFAULT_STRING_FORMAT = 'YAML';
 
     /**
-     * An identiy map to hold any loaded instances of Character objects.
+     * An identiy map to hold any loaded instances of Game objects.
      * This must be public so that other peer classes can access this when hydrating from JOIN
      * queries.
-     * @var        array Character[]
+     * @var        array Game[]
      */
     public static $instances = array();
 
@@ -83,30 +80,30 @@ abstract class BaseCharacterPeer
      * holds an array of fieldnames
      *
      * first dimension keys are the type constants
-     * e.g. CharacterPeer::$fieldNames[CharacterPeer::TYPE_PHPNAME][0] = 'Id'
+     * e.g. GamePeer::$fieldNames[GamePeer::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        BasePeer::TYPE_PHPNAME => array ('Id', 'Name', 'Power', 'PowerOnePerGame', 'Drawback', 'Cards', 'Role', 'AmiralOrder', 'PresidentOrder', 'CagOrder', ),
-        BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'name', 'power', 'powerOnePerGame', 'drawback', 'cards', 'role', 'amiralOrder', 'presidentOrder', 'cagOrder', ),
-        BasePeer::TYPE_COLNAME => array (CharacterPeer::ID, CharacterPeer::NAME, CharacterPeer::POWER, CharacterPeer::POWER_ONE_PER_GAME, CharacterPeer::DRAWBACK, CharacterPeer::CARDS, CharacterPeer::ROLE, CharacterPeer::AMIRAL_ORDER, CharacterPeer::PRESIDENT_ORDER, CharacterPeer::CAG_ORDER, ),
-        BasePeer::TYPE_RAW_COLNAME => array ('ID', 'NAME', 'POWER', 'POWER_ONE_PER_GAME', 'DRAWBACK', 'CARDS', 'ROLE', 'AMIRAL_ORDER', 'PRESIDENT_ORDER', 'CAG_ORDER', ),
-        BasePeer::TYPE_FIELDNAME => array ('id', 'name', 'power', 'power_one_per_game', 'drawback', 'cards', 'role', 'amiral_order', 'president_order', 'cag_order', ),
-        BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
+        BasePeer::TYPE_PHPNAME => array ('Id', 'Name', 'Fuel', 'Food', 'Morale', 'Population', 'Distance', 'Jump', 'IsCompleted', ),
+        BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'name', 'fuel', 'food', 'morale', 'population', 'distance', 'jump', 'isCompleted', ),
+        BasePeer::TYPE_COLNAME => array (GamePeer::ID, GamePeer::NAME, GamePeer::FUEL, GamePeer::FOOD, GamePeer::MORALE, GamePeer::POPULATION, GamePeer::DISTANCE, GamePeer::JUMP, GamePeer::IS_COMPLETED, ),
+        BasePeer::TYPE_RAW_COLNAME => array ('ID', 'NAME', 'FUEL', 'FOOD', 'MORALE', 'POPULATION', 'DISTANCE', 'JUMP', 'IS_COMPLETED', ),
+        BasePeer::TYPE_FIELDNAME => array ('id', 'name', 'fuel', 'food', 'morale', 'population', 'distance', 'jump', 'is_completed', ),
+        BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, )
     );
 
     /**
      * holds an array of keys for quick access to the fieldnames array
      *
      * first dimension keys are the type constants
-     * e.g. CharacterPeer::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
+     * e.g. GamePeer::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Name' => 1, 'Power' => 2, 'PowerOnePerGame' => 3, 'Drawback' => 4, 'Cards' => 5, 'Role' => 6, 'AmiralOrder' => 7, 'PresidentOrder' => 8, 'CagOrder' => 9, ),
-        BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'name' => 1, 'power' => 2, 'powerOnePerGame' => 3, 'drawback' => 4, 'cards' => 5, 'role' => 6, 'amiralOrder' => 7, 'presidentOrder' => 8, 'cagOrder' => 9, ),
-        BasePeer::TYPE_COLNAME => array (CharacterPeer::ID => 0, CharacterPeer::NAME => 1, CharacterPeer::POWER => 2, CharacterPeer::POWER_ONE_PER_GAME => 3, CharacterPeer::DRAWBACK => 4, CharacterPeer::CARDS => 5, CharacterPeer::ROLE => 6, CharacterPeer::AMIRAL_ORDER => 7, CharacterPeer::PRESIDENT_ORDER => 8, CharacterPeer::CAG_ORDER => 9, ),
-        BasePeer::TYPE_RAW_COLNAME => array ('ID' => 0, 'NAME' => 1, 'POWER' => 2, 'POWER_ONE_PER_GAME' => 3, 'DRAWBACK' => 4, 'CARDS' => 5, 'ROLE' => 6, 'AMIRAL_ORDER' => 7, 'PRESIDENT_ORDER' => 8, 'CAG_ORDER' => 9, ),
-        BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'name' => 1, 'power' => 2, 'power_one_per_game' => 3, 'drawback' => 4, 'cards' => 5, 'role' => 6, 'amiral_order' => 7, 'president_order' => 8, 'cag_order' => 9, ),
-        BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
+        BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Name' => 1, 'Fuel' => 2, 'Food' => 3, 'Morale' => 4, 'Population' => 5, 'Distance' => 6, 'Jump' => 7, 'IsCompleted' => 8, ),
+        BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'name' => 1, 'fuel' => 2, 'food' => 3, 'morale' => 4, 'population' => 5, 'distance' => 6, 'jump' => 7, 'isCompleted' => 8, ),
+        BasePeer::TYPE_COLNAME => array (GamePeer::ID => 0, GamePeer::NAME => 1, GamePeer::FUEL => 2, GamePeer::FOOD => 3, GamePeer::MORALE => 4, GamePeer::POPULATION => 5, GamePeer::DISTANCE => 6, GamePeer::JUMP => 7, GamePeer::IS_COMPLETED => 8, ),
+        BasePeer::TYPE_RAW_COLNAME => array ('ID' => 0, 'NAME' => 1, 'FUEL' => 2, 'FOOD' => 3, 'MORALE' => 4, 'POPULATION' => 5, 'DISTANCE' => 6, 'JUMP' => 7, 'IS_COMPLETED' => 8, ),
+        BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'name' => 1, 'fuel' => 2, 'food' => 3, 'morale' => 4, 'population' => 5, 'distance' => 6, 'jump' => 7, 'is_completed' => 8, ),
+        BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, )
     );
 
     /**
@@ -121,10 +118,10 @@ abstract class BaseCharacterPeer
      */
     public static function translateFieldName($name, $fromType, $toType)
     {
-        $toNames = CharacterPeer::getFieldNames($toType);
-        $key = isset(CharacterPeer::$fieldKeys[$fromType][$name]) ? CharacterPeer::$fieldKeys[$fromType][$name] : null;
+        $toNames = GamePeer::getFieldNames($toType);
+        $key = isset(GamePeer::$fieldKeys[$fromType][$name]) ? GamePeer::$fieldKeys[$fromType][$name] : null;
         if ($key === null) {
-            throw new PropelException("'$name' could not be found in the field names of type '$fromType'. These are: " . print_r(CharacterPeer::$fieldKeys[$fromType], true));
+            throw new PropelException("'$name' could not be found in the field names of type '$fromType'. These are: " . print_r(GamePeer::$fieldKeys[$fromType], true));
         }
 
         return $toNames[$key];
@@ -141,11 +138,11 @@ abstract class BaseCharacterPeer
      */
     public static function getFieldNames($type = BasePeer::TYPE_PHPNAME)
     {
-        if (!array_key_exists($type, CharacterPeer::$fieldNames)) {
+        if (!array_key_exists($type, GamePeer::$fieldNames)) {
             throw new PropelException('Method getFieldNames() expects the parameter $type to be one of the class constants BasePeer::TYPE_PHPNAME, BasePeer::TYPE_STUDLYPHPNAME, BasePeer::TYPE_COLNAME, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_NUM. ' . $type . ' was given.');
         }
 
-        return CharacterPeer::$fieldNames[$type];
+        return GamePeer::$fieldNames[$type];
     }
 
     /**
@@ -157,12 +154,12 @@ abstract class BaseCharacterPeer
      *		$c->addJoin(TablePeer::alias("alias1", TablePeer::PRIMARY_KEY_COLUMN), TablePeer::PRIMARY_KEY_COLUMN);
      * </code>
      * @param      string $alias The alias for the current table.
-     * @param      string $column The column name for current table. (i.e. CharacterPeer::COLUMN_NAME).
+     * @param      string $column The column name for current table. (i.e. GamePeer::COLUMN_NAME).
      * @return string
      */
     public static function alias($alias, $column)
     {
-        return str_replace(CharacterPeer::TABLE_NAME.'.', $alias.'.', $column);
+        return str_replace(GamePeer::TABLE_NAME.'.', $alias.'.', $column);
     }
 
     /**
@@ -180,27 +177,25 @@ abstract class BaseCharacterPeer
     public static function addSelectColumns(Criteria $criteria, $alias = null)
     {
         if (null === $alias) {
-            $criteria->addSelectColumn(CharacterPeer::ID);
-            $criteria->addSelectColumn(CharacterPeer::NAME);
-            $criteria->addSelectColumn(CharacterPeer::POWER);
-            $criteria->addSelectColumn(CharacterPeer::POWER_ONE_PER_GAME);
-            $criteria->addSelectColumn(CharacterPeer::DRAWBACK);
-            $criteria->addSelectColumn(CharacterPeer::CARDS);
-            $criteria->addSelectColumn(CharacterPeer::ROLE);
-            $criteria->addSelectColumn(CharacterPeer::AMIRAL_ORDER);
-            $criteria->addSelectColumn(CharacterPeer::PRESIDENT_ORDER);
-            $criteria->addSelectColumn(CharacterPeer::CAG_ORDER);
+            $criteria->addSelectColumn(GamePeer::ID);
+            $criteria->addSelectColumn(GamePeer::NAME);
+            $criteria->addSelectColumn(GamePeer::FUEL);
+            $criteria->addSelectColumn(GamePeer::FOOD);
+            $criteria->addSelectColumn(GamePeer::MORALE);
+            $criteria->addSelectColumn(GamePeer::POPULATION);
+            $criteria->addSelectColumn(GamePeer::DISTANCE);
+            $criteria->addSelectColumn(GamePeer::JUMP);
+            $criteria->addSelectColumn(GamePeer::IS_COMPLETED);
         } else {
             $criteria->addSelectColumn($alias . '.ID');
             $criteria->addSelectColumn($alias . '.NAME');
-            $criteria->addSelectColumn($alias . '.POWER');
-            $criteria->addSelectColumn($alias . '.POWER_ONE_PER_GAME');
-            $criteria->addSelectColumn($alias . '.DRAWBACK');
-            $criteria->addSelectColumn($alias . '.CARDS');
-            $criteria->addSelectColumn($alias . '.ROLE');
-            $criteria->addSelectColumn($alias . '.AMIRAL_ORDER');
-            $criteria->addSelectColumn($alias . '.PRESIDENT_ORDER');
-            $criteria->addSelectColumn($alias . '.CAG_ORDER');
+            $criteria->addSelectColumn($alias . '.FUEL');
+            $criteria->addSelectColumn($alias . '.FOOD');
+            $criteria->addSelectColumn($alias . '.MORALE');
+            $criteria->addSelectColumn($alias . '.POPULATION');
+            $criteria->addSelectColumn($alias . '.DISTANCE');
+            $criteria->addSelectColumn($alias . '.JUMP');
+            $criteria->addSelectColumn($alias . '.IS_COMPLETED');
         }
     }
 
@@ -220,21 +215,21 @@ abstract class BaseCharacterPeer
         // We need to set the primary table name, since in the case that there are no WHERE columns
         // it will be impossible for the BasePeer::createSelectSql() method to determine which
         // tables go into the FROM clause.
-        $criteria->setPrimaryTableName(CharacterPeer::TABLE_NAME);
+        $criteria->setPrimaryTableName(GamePeer::TABLE_NAME);
 
         if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
             $criteria->setDistinct();
         }
 
         if (!$criteria->hasSelectClause()) {
-            CharacterPeer::addSelectColumns($criteria);
+            GamePeer::addSelectColumns($criteria);
         }
 
         $criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
-        $criteria->setDbName(CharacterPeer::DATABASE_NAME); // Set the correct dbName
+        $criteria->setDbName(GamePeer::DATABASE_NAME); // Set the correct dbName
 
         if ($con === null) {
-            $con = Propel::getConnection(CharacterPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+            $con = Propel::getConnection(GamePeer::DATABASE_NAME, Propel::CONNECTION_READ);
         }
         // BasePeer returns a PDOStatement
         $stmt = BasePeer::doCount($criteria, $con);
@@ -253,7 +248,7 @@ abstract class BaseCharacterPeer
      *
      * @param      Criteria $criteria object used to create the SELECT statement.
      * @param      PropelPDO $con
-     * @return                 Character
+     * @return                 Game
      * @throws PropelException Any exceptions caught during processing will be
      *		 rethrown wrapped into a PropelException.
      */
@@ -261,7 +256,7 @@ abstract class BaseCharacterPeer
     {
         $critcopy = clone $criteria;
         $critcopy->setLimit(1);
-        $objects = CharacterPeer::doSelect($critcopy, $con);
+        $objects = GamePeer::doSelect($critcopy, $con);
         if ($objects) {
             return $objects[0];
         }
@@ -279,7 +274,7 @@ abstract class BaseCharacterPeer
      */
     public static function doSelect(Criteria $criteria, PropelPDO $con = null)
     {
-        return CharacterPeer::populateObjects(CharacterPeer::doSelectStmt($criteria, $con));
+        return GamePeer::populateObjects(GamePeer::doSelectStmt($criteria, $con));
     }
     /**
      * Prepares the Criteria object and uses the parent doSelect() method to execute a PDOStatement.
@@ -297,16 +292,16 @@ abstract class BaseCharacterPeer
     public static function doSelectStmt(Criteria $criteria, PropelPDO $con = null)
     {
         if ($con === null) {
-            $con = Propel::getConnection(CharacterPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+            $con = Propel::getConnection(GamePeer::DATABASE_NAME, Propel::CONNECTION_READ);
         }
 
         if (!$criteria->hasSelectClause()) {
             $criteria = clone $criteria;
-            CharacterPeer::addSelectColumns($criteria);
+            GamePeer::addSelectColumns($criteria);
         }
 
         // Set the correct dbName
-        $criteria->setDbName(CharacterPeer::DATABASE_NAME);
+        $criteria->setDbName(GamePeer::DATABASE_NAME);
 
         // BasePeer returns a PDOStatement
         return BasePeer::doSelect($criteria, $con);
@@ -320,7 +315,7 @@ abstract class BaseCharacterPeer
      * to the cache in order to ensure that the same objects are always returned by doSelect*()
      * and retrieveByPK*() calls.
      *
-     * @param      Character $obj A Character object.
+     * @param      Game $obj A Game object.
      * @param      string $key (optional) key to use for instance map (for performance boost if key was already calculated externally).
      */
     public static function addInstanceToPool($obj, $key = null)
@@ -329,7 +324,7 @@ abstract class BaseCharacterPeer
             if ($key === null) {
                 $key = (string) $obj->getId();
             } // if key === null
-            CharacterPeer::$instances[$key] = $obj;
+            GamePeer::$instances[$key] = $obj;
         }
     }
 
@@ -341,7 +336,7 @@ abstract class BaseCharacterPeer
      * methods in your stub classes -- you may need to explicitly remove objects
      * from the cache in order to prevent returning objects that no longer exist.
      *
-     * @param      mixed $value A Character object or a primary key value.
+     * @param      mixed $value A Game object or a primary key value.
      *
      * @return void
      * @throws PropelException - if the value is invalid.
@@ -349,17 +344,17 @@ abstract class BaseCharacterPeer
     public static function removeInstanceFromPool($value)
     {
         if (Propel::isInstancePoolingEnabled() && $value !== null) {
-            if (is_object($value) && $value instanceof Character) {
+            if (is_object($value) && $value instanceof Game) {
                 $key = (string) $value->getId();
             } elseif (is_scalar($value)) {
                 // assume we've been passed a primary key
                 $key = (string) $value;
             } else {
-                $e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or Character object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value,true)));
+                $e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or Game object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value,true)));
                 throw $e;
             }
 
-            unset(CharacterPeer::$instances[$key]);
+            unset(GamePeer::$instances[$key]);
         }
     } // removeInstanceFromPool()
 
@@ -370,14 +365,14 @@ abstract class BaseCharacterPeer
      * a multi-column primary key, a serialize()d version of the primary key will be returned.
      *
      * @param      string $key The key (@see getPrimaryKeyHash()) for this instance.
-     * @return   Character Found object or null if 1) no instance exists for specified key or 2) instance pooling has been disabled.
+     * @return   Game Found object or null if 1) no instance exists for specified key or 2) instance pooling has been disabled.
      * @see        getPrimaryKeyHash()
      */
     public static function getInstanceFromPool($key)
     {
         if (Propel::isInstancePoolingEnabled()) {
-            if (isset(CharacterPeer::$instances[$key])) {
-                return CharacterPeer::$instances[$key];
+            if (isset(GamePeer::$instances[$key])) {
+                return GamePeer::$instances[$key];
             }
         }
 
@@ -391,11 +386,11 @@ abstract class BaseCharacterPeer
      */
     public static function clearInstancePool()
     {
-        CharacterPeer::$instances = array();
+        GamePeer::$instances = array();
     }
 
     /**
-     * Method to invalidate the instance pool of all tables related to character
+     * Method to invalidate the instance pool of all tables related to game
      * by a foreign key with ON DELETE CASCADE
      */
     public static function clearRelatedInstancePool()
@@ -449,11 +444,11 @@ abstract class BaseCharacterPeer
         $results = array();
 
         // set the class once to avoid overhead in the loop
-        $cls = CharacterPeer::getOMClass();
+        $cls = GamePeer::getOMClass();
         // populate the object(s)
         while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-            $key = CharacterPeer::getPrimaryKeyHashFromRow($row, 0);
-            if (null !== ($obj = CharacterPeer::getInstanceFromPool($key))) {
+            $key = GamePeer::getPrimaryKeyHashFromRow($row, 0);
+            if (null !== ($obj = GamePeer::getInstanceFromPool($key))) {
                 // We no longer rehydrate the object, since this can cause data loss.
                 // See http://www.propelorm.org/ticket/509
                 // $obj->hydrate($row, 0, true); // rehydrate
@@ -462,7 +457,7 @@ abstract class BaseCharacterPeer
                 $obj = new $cls();
                 $obj->hydrate($row);
                 $results[] = $obj;
-                CharacterPeer::addInstanceToPool($obj, $key);
+                GamePeer::addInstanceToPool($obj, $key);
             } // if key exists
         }
         $stmt->closeCursor();
@@ -476,21 +471,21 @@ abstract class BaseCharacterPeer
      * @param      int $startcol The 0-based offset for reading from the resultset row.
      * @throws PropelException Any exceptions caught during processing will be
      *		 rethrown wrapped into a PropelException.
-     * @return array (Character object, last column rank)
+     * @return array (Game object, last column rank)
      */
     public static function populateObject($row, $startcol = 0)
     {
-        $key = CharacterPeer::getPrimaryKeyHashFromRow($row, $startcol);
-        if (null !== ($obj = CharacterPeer::getInstanceFromPool($key))) {
+        $key = GamePeer::getPrimaryKeyHashFromRow($row, $startcol);
+        if (null !== ($obj = GamePeer::getInstanceFromPool($key))) {
             // We no longer rehydrate the object, since this can cause data loss.
             // See http://www.propelorm.org/ticket/509
             // $obj->hydrate($row, $startcol, true); // rehydrate
-            $col = $startcol + CharacterPeer::NUM_HYDRATE_COLUMNS;
+            $col = $startcol + GamePeer::NUM_HYDRATE_COLUMNS;
         } else {
-            $cls = CharacterPeer::OM_CLASS;
+            $cls = GamePeer::OM_CLASS;
             $obj = new $cls();
             $col = $obj->hydrate($row, $startcol);
-            CharacterPeer::addInstanceToPool($obj, $key);
+            GamePeer::addInstanceToPool($obj, $key);
         }
 
         return array($obj, $col);
@@ -505,7 +500,7 @@ abstract class BaseCharacterPeer
      */
     public static function getTableMap()
     {
-        return Propel::getDatabaseMap(CharacterPeer::DATABASE_NAME)->getTable(CharacterPeer::TABLE_NAME);
+        return Propel::getDatabaseMap(GamePeer::DATABASE_NAME)->getTable(GamePeer::TABLE_NAME);
     }
 
     /**
@@ -513,9 +508,9 @@ abstract class BaseCharacterPeer
      */
     public static function buildTableMap()
     {
-      $dbMap = Propel::getDatabaseMap(BaseCharacterPeer::DATABASE_NAME);
-      if (!$dbMap->hasTable(BaseCharacterPeer::TABLE_NAME)) {
-        $dbMap->addTableObject(new CharacterTableMap());
+      $dbMap = Propel::getDatabaseMap(BaseGamePeer::DATABASE_NAME);
+      if (!$dbMap->hasTable(BaseGamePeer::TABLE_NAME)) {
+        $dbMap->addTableObject(new GameTableMap());
       }
     }
 
@@ -527,13 +522,13 @@ abstract class BaseCharacterPeer
      */
     public static function getOMClass()
     {
-        return CharacterPeer::OM_CLASS;
+        return GamePeer::OM_CLASS;
     }
 
     /**
-     * Performs an INSERT on the database, given a Character or Criteria object.
+     * Performs an INSERT on the database, given a Game or Criteria object.
      *
-     * @param      mixed $values Criteria or Character object containing data that is used to create the INSERT statement.
+     * @param      mixed $values Criteria or Game object containing data that is used to create the INSERT statement.
      * @param      PropelPDO $con the PropelPDO connection to use
      * @return mixed           The new primary key.
      * @throws PropelException Any exceptions caught during processing will be
@@ -542,22 +537,22 @@ abstract class BaseCharacterPeer
     public static function doInsert($values, PropelPDO $con = null)
     {
         if ($con === null) {
-            $con = Propel::getConnection(CharacterPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+            $con = Propel::getConnection(GamePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
         }
 
         if ($values instanceof Criteria) {
             $criteria = clone $values; // rename for clarity
         } else {
-            $criteria = $values->buildCriteria(); // build Criteria from Character object
+            $criteria = $values->buildCriteria(); // build Criteria from Game object
         }
 
-        if ($criteria->containsKey(CharacterPeer::ID) && $criteria->keyContainsValue(CharacterPeer::ID) ) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key ('.CharacterPeer::ID.')');
+        if ($criteria->containsKey(GamePeer::ID) && $criteria->keyContainsValue(GamePeer::ID) ) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key ('.GamePeer::ID.')');
         }
 
 
         // Set the correct dbName
-        $criteria->setDbName(CharacterPeer::DATABASE_NAME);
+        $criteria->setDbName(GamePeer::DATABASE_NAME);
 
         try {
             // use transaction because $criteria could contain info
@@ -574,9 +569,9 @@ abstract class BaseCharacterPeer
     }
 
     /**
-     * Performs an UPDATE on the database, given a Character or Criteria object.
+     * Performs an UPDATE on the database, given a Game or Criteria object.
      *
-     * @param      mixed $values Criteria or Character object containing data that is used to create the UPDATE statement.
+     * @param      mixed $values Criteria or Game object containing data that is used to create the UPDATE statement.
      * @param      PropelPDO $con The connection to use (specify PropelPDO connection object to exert more control over transactions).
      * @return int             The number of affected rows (if supported by underlying database driver).
      * @throws PropelException Any exceptions caught during processing will be
@@ -585,35 +580,35 @@ abstract class BaseCharacterPeer
     public static function doUpdate($values, PropelPDO $con = null)
     {
         if ($con === null) {
-            $con = Propel::getConnection(CharacterPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+            $con = Propel::getConnection(GamePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
         }
 
-        $selectCriteria = new Criteria(CharacterPeer::DATABASE_NAME);
+        $selectCriteria = new Criteria(GamePeer::DATABASE_NAME);
 
         if ($values instanceof Criteria) {
             $criteria = clone $values; // rename for clarity
 
-            $comparison = $criteria->getComparison(CharacterPeer::ID);
-            $value = $criteria->remove(CharacterPeer::ID);
+            $comparison = $criteria->getComparison(GamePeer::ID);
+            $value = $criteria->remove(GamePeer::ID);
             if ($value) {
-                $selectCriteria->add(CharacterPeer::ID, $value, $comparison);
+                $selectCriteria->add(GamePeer::ID, $value, $comparison);
             } else {
-                $selectCriteria->setPrimaryTableName(CharacterPeer::TABLE_NAME);
+                $selectCriteria->setPrimaryTableName(GamePeer::TABLE_NAME);
             }
 
-        } else { // $values is Character object
+        } else { // $values is Game object
             $criteria = $values->buildCriteria(); // gets full criteria
             $selectCriteria = $values->buildPkeyCriteria(); // gets criteria w/ primary key(s)
         }
 
         // set the correct dbName
-        $criteria->setDbName(CharacterPeer::DATABASE_NAME);
+        $criteria->setDbName(GamePeer::DATABASE_NAME);
 
         return BasePeer::doUpdate($selectCriteria, $criteria, $con);
     }
 
     /**
-     * Deletes all rows from the character table.
+     * Deletes all rows from the game table.
      *
      * @param      PropelPDO $con the connection to use
      * @return int             The number of affected rows (if supported by underlying database driver).
@@ -622,19 +617,19 @@ abstract class BaseCharacterPeer
     public static function doDeleteAll(PropelPDO $con = null)
     {
         if ($con === null) {
-            $con = Propel::getConnection(CharacterPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+            $con = Propel::getConnection(GamePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
         }
         $affectedRows = 0; // initialize var to track total num of affected rows
         try {
             // use transaction because $criteria could contain info
             // for more than one table or we could emulating ON DELETE CASCADE, etc.
             $con->beginTransaction();
-            $affectedRows += BasePeer::doDeleteAll(CharacterPeer::TABLE_NAME, $con, CharacterPeer::DATABASE_NAME);
+            $affectedRows += BasePeer::doDeleteAll(GamePeer::TABLE_NAME, $con, GamePeer::DATABASE_NAME);
             // Because this db requires some delete cascade/set null emulation, we have to
             // clear the cached instance *after* the emulation has happened (since
             // instances get re-added by the select statement contained therein).
-            CharacterPeer::clearInstancePool();
-            CharacterPeer::clearRelatedInstancePool();
+            GamePeer::clearInstancePool();
+            GamePeer::clearRelatedInstancePool();
             $con->commit();
 
             return $affectedRows;
@@ -645,9 +640,9 @@ abstract class BaseCharacterPeer
     }
 
     /**
-     * Performs a DELETE on the database, given a Character or Criteria object OR a primary key value.
+     * Performs a DELETE on the database, given a Game or Criteria object OR a primary key value.
      *
-     * @param      mixed $values Criteria or Character object or primary key or array of primary keys
+     * @param      mixed $values Criteria or Game object or primary key or array of primary keys
      *              which is used to create the DELETE statement
      * @param      PropelPDO $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -658,32 +653,32 @@ abstract class BaseCharacterPeer
      public static function doDelete($values, PropelPDO $con = null)
      {
         if ($con === null) {
-            $con = Propel::getConnection(CharacterPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+            $con = Propel::getConnection(GamePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
         }
 
         if ($values instanceof Criteria) {
             // invalidate the cache for all objects of this type, since we have no
             // way of knowing (without running a query) what objects should be invalidated
             // from the cache based on this Criteria.
-            CharacterPeer::clearInstancePool();
+            GamePeer::clearInstancePool();
             // rename for clarity
             $criteria = clone $values;
-        } elseif ($values instanceof Character) { // it's a model object
+        } elseif ($values instanceof Game) { // it's a model object
             // invalidate the cache for this single object
-            CharacterPeer::removeInstanceFromPool($values);
+            GamePeer::removeInstanceFromPool($values);
             // create criteria based on pk values
             $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks
-            $criteria = new Criteria(CharacterPeer::DATABASE_NAME);
-            $criteria->add(CharacterPeer::ID, (array) $values, Criteria::IN);
+            $criteria = new Criteria(GamePeer::DATABASE_NAME);
+            $criteria->add(GamePeer::ID, (array) $values, Criteria::IN);
             // invalidate the cache for this object(s)
             foreach ((array) $values as $singleval) {
-                CharacterPeer::removeInstanceFromPool($singleval);
+                GamePeer::removeInstanceFromPool($singleval);
             }
         }
 
         // Set the correct dbName
-        $criteria->setDbName(CharacterPeer::DATABASE_NAME);
+        $criteria->setDbName(GamePeer::DATABASE_NAME);
 
         $affectedRows = 0; // initialize var to track total num of affected rows
 
@@ -693,7 +688,7 @@ abstract class BaseCharacterPeer
             $con->beginTransaction();
 
             $affectedRows += BasePeer::doDelete($criteria, $con);
-            CharacterPeer::clearRelatedInstancePool();
+            GamePeer::clearRelatedInstancePool();
             $con->commit();
 
             return $affectedRows;
@@ -704,13 +699,13 @@ abstract class BaseCharacterPeer
     }
 
     /**
-     * Validates all modified columns of given Character object.
+     * Validates all modified columns of given Game object.
      * If parameter $columns is either a single column name or an array of column names
      * than only those columns are validated.
      *
      * NOTICE: This does not apply to primary or foreign keys for now.
      *
-     * @param      Character $obj The object to validate.
+     * @param      Game $obj The object to validate.
      * @param      mixed $cols Column name or array of column names.
      *
      * @return mixed TRUE if all columns are valid or the error message of the first invalid column.
@@ -720,8 +715,8 @@ abstract class BaseCharacterPeer
         $columns = array();
 
         if ($cols) {
-            $dbMap = Propel::getDatabaseMap(CharacterPeer::DATABASE_NAME);
-            $tableMap = $dbMap->getTable(CharacterPeer::TABLE_NAME);
+            $dbMap = Propel::getDatabaseMap(GamePeer::DATABASE_NAME);
+            $tableMap = $dbMap->getTable(GamePeer::TABLE_NAME);
 
             if (! is_array($cols)) {
                 $cols = array($cols);
@@ -737,7 +732,7 @@ abstract class BaseCharacterPeer
 
         }
 
-        return BasePeer::doValidate(CharacterPeer::DATABASE_NAME, CharacterPeer::TABLE_NAME, $columns);
+        return BasePeer::doValidate(GamePeer::DATABASE_NAME, GamePeer::TABLE_NAME, $columns);
     }
 
     /**
@@ -745,23 +740,23 @@ abstract class BaseCharacterPeer
      *
      * @param      int $pk the primary key.
      * @param      PropelPDO $con the connection to use
-     * @return Character
+     * @return Game
      */
     public static function retrieveByPK($pk, PropelPDO $con = null)
     {
 
-        if (null !== ($obj = CharacterPeer::getInstanceFromPool((string) $pk))) {
+        if (null !== ($obj = GamePeer::getInstanceFromPool((string) $pk))) {
             return $obj;
         }
 
         if ($con === null) {
-            $con = Propel::getConnection(CharacterPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+            $con = Propel::getConnection(GamePeer::DATABASE_NAME, Propel::CONNECTION_READ);
         }
 
-        $criteria = new Criteria(CharacterPeer::DATABASE_NAME);
-        $criteria->add(CharacterPeer::ID, $pk);
+        $criteria = new Criteria(GamePeer::DATABASE_NAME);
+        $criteria->add(GamePeer::ID, $pk);
 
-        $v = CharacterPeer::doSelect($criteria, $con);
+        $v = GamePeer::doSelect($criteria, $con);
 
         return !empty($v) > 0 ? $v[0] : null;
     }
@@ -771,31 +766,31 @@ abstract class BaseCharacterPeer
      *
      * @param      array $pks List of primary keys
      * @param      PropelPDO $con the connection to use
-     * @return Character[]
+     * @return Game[]
      * @throws PropelException Any exceptions caught during processing will be
      *		 rethrown wrapped into a PropelException.
      */
     public static function retrieveByPKs($pks, PropelPDO $con = null)
     {
         if ($con === null) {
-            $con = Propel::getConnection(CharacterPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+            $con = Propel::getConnection(GamePeer::DATABASE_NAME, Propel::CONNECTION_READ);
         }
 
         $objs = null;
         if (empty($pks)) {
             $objs = array();
         } else {
-            $criteria = new Criteria(CharacterPeer::DATABASE_NAME);
-            $criteria->add(CharacterPeer::ID, $pks, Criteria::IN);
-            $objs = CharacterPeer::doSelect($criteria, $con);
+            $criteria = new Criteria(GamePeer::DATABASE_NAME);
+            $criteria->add(GamePeer::ID, $pks, Criteria::IN);
+            $objs = GamePeer::doSelect($criteria, $con);
         }
 
         return $objs;
     }
 
-} // BaseCharacterPeer
+} // BaseGamePeer
 
 // This is the static code needed to register the TableMap for this table with the main Propel class.
 //
-BaseCharacterPeer::buildTableMap();
+BaseGamePeer::buildTableMap();
 

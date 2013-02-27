@@ -7,6 +7,44 @@
         <column name="power" type="varchar" size="40" />
         <column name="power_one_per_game" type="varchar" size="40" />
         <column name="drawback" type="varchar" size="40" />
+        <column name="cards" type="varchar" size="40" />
+        <column name="role" type="varchar" size="40" />
+        <column name="amiral_order" type="integer" />
+        <column name="president_order" type="integer" />
+        <column name="cag_order" type="integer" />
+    </table>
+
+    <table name="game">
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+        <column name="name" type="varchar" size="40" />
+        <column name="fuel" type="integer" />
+        <column name="food" type="integer" />
+        <column name="morale" type="integer" />
+        <column name="population" type="integer" />
+        <column name="distance" type="integer" />
+        <column name="jump" type="integer" />
+        <column name="is_completed" type="boolean" />
+    </table>    
+
+    <table name="game_player">
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+        <column name="game_id" type="integer" required="true" />
+        <column name="user_id" type="integer" required="true" />
+        <column name="character_id" type="integer" />
+        <column name="is_amiral" type="boolean" />
+        <column name="is_president" type="boolean" />
+        <column name="is_cag" type="boolean" />
+        <column name="is_alive" type="boolean" />
+
+        <foreign-key foreignTable="game">
+            <reference local="game_id" foreign="id" />
+        </foreign-key>
+        <foreign-key foreignTable="fos_user">
+            <reference local="user_id" foreign="id" />
+        </foreign-key>
+        <foreign-key foreignTable="character">
+            <reference local="character_id" foreign="id" />
+        </foreign-key>
     </table>
 
 </database>

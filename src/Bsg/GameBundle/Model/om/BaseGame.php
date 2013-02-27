@@ -13,24 +13,24 @@ use \PropelCollection;
 use \PropelException;
 use \PropelObjectCollection;
 use \PropelPDO;
-use Bsg\GameBundle\Model\Character;
-use Bsg\GameBundle\Model\CharacterPeer;
-use Bsg\GameBundle\Model\CharacterQuery;
+use Bsg\GameBundle\Model\Game;
+use Bsg\GameBundle\Model\GamePeer;
 use Bsg\GameBundle\Model\GamePlayer;
 use Bsg\GameBundle\Model\GamePlayerQuery;
+use Bsg\GameBundle\Model\GameQuery;
 
-abstract class BaseCharacter extends BaseObject implements Persistent
+abstract class BaseGame extends BaseObject implements Persistent
 {
     /**
      * Peer class name
      */
-    const PEER = 'Bsg\\GameBundle\\Model\\CharacterPeer';
+    const PEER = 'Bsg\\GameBundle\\Model\\GamePeer';
 
     /**
      * The Peer class.
      * Instance provides a convenient way of calling static methods on a class
      * that calling code may not be able to identify.
-     * @var        CharacterPeer
+     * @var        GamePeer
      */
     protected static $peer;
 
@@ -53,52 +53,46 @@ abstract class BaseCharacter extends BaseObject implements Persistent
     protected $name;
 
     /**
-     * The value for the power field.
-     * @var        string
-     */
-    protected $power;
-
-    /**
-     * The value for the power_one_per_game field.
-     * @var        string
-     */
-    protected $power_one_per_game;
-
-    /**
-     * The value for the drawback field.
-     * @var        string
-     */
-    protected $drawback;
-
-    /**
-     * The value for the cards field.
-     * @var        string
-     */
-    protected $cards;
-
-    /**
-     * The value for the role field.
-     * @var        string
-     */
-    protected $role;
-
-    /**
-     * The value for the amiral_order field.
+     * The value for the fuel field.
      * @var        int
      */
-    protected $amiral_order;
+    protected $fuel;
 
     /**
-     * The value for the president_order field.
+     * The value for the food field.
      * @var        int
      */
-    protected $president_order;
+    protected $food;
 
     /**
-     * The value for the cag_order field.
+     * The value for the morale field.
      * @var        int
      */
-    protected $cag_order;
+    protected $morale;
+
+    /**
+     * The value for the population field.
+     * @var        int
+     */
+    protected $population;
+
+    /**
+     * The value for the distance field.
+     * @var        int
+     */
+    protected $distance;
+
+    /**
+     * The value for the jump field.
+     * @var        int
+     */
+    protected $jump;
+
+    /**
+     * The value for the is_completed field.
+     * @var        boolean
+     */
+    protected $is_completed;
 
     /**
      * @var        PropelObjectCollection|GamePlayer[] Collection to store aggregation of GamePlayer objects.
@@ -147,90 +141,80 @@ abstract class BaseCharacter extends BaseObject implements Persistent
     }
 
     /**
-     * Get the [power] column value.
-     *
-     * @return string
-     */
-    public function getPower()
-    {
-        return $this->power;
-    }
-
-    /**
-     * Get the [power_one_per_game] column value.
-     *
-     * @return string
-     */
-    public function getPowerOnePerGame()
-    {
-        return $this->power_one_per_game;
-    }
-
-    /**
-     * Get the [drawback] column value.
-     *
-     * @return string
-     */
-    public function getDrawback()
-    {
-        return $this->drawback;
-    }
-
-    /**
-     * Get the [cards] column value.
-     *
-     * @return string
-     */
-    public function getCards()
-    {
-        return $this->cards;
-    }
-
-    /**
-     * Get the [role] column value.
-     *
-     * @return string
-     */
-    public function getRole()
-    {
-        return $this->role;
-    }
-
-    /**
-     * Get the [amiral_order] column value.
+     * Get the [fuel] column value.
      *
      * @return int
      */
-    public function getAmiralOrder()
+    public function getFuel()
     {
-        return $this->amiral_order;
+        return $this->fuel;
     }
 
     /**
-     * Get the [president_order] column value.
+     * Get the [food] column value.
      *
      * @return int
      */
-    public function getPresidentOrder()
+    public function getFood()
     {
-        return $this->president_order;
+        return $this->food;
     }
 
     /**
-     * Get the [cag_order] column value.
+     * Get the [morale] column value.
      *
      * @return int
      */
-    public function getCagOrder()
+    public function getMorale()
     {
-        return $this->cag_order;
+        return $this->morale;
+    }
+
+    /**
+     * Get the [population] column value.
+     *
+     * @return int
+     */
+    public function getPopulation()
+    {
+        return $this->population;
+    }
+
+    /**
+     * Get the [distance] column value.
+     *
+     * @return int
+     */
+    public function getDistance()
+    {
+        return $this->distance;
+    }
+
+    /**
+     * Get the [jump] column value.
+     *
+     * @return int
+     */
+    public function getJump()
+    {
+        return $this->jump;
+    }
+
+    /**
+     * Get the [is_completed] column value.
+     *
+     * @return boolean
+     */
+    public function getIsCompleted()
+    {
+        return $this->is_completed;
     }
 
     /**
      * Set the value of [id] column.
      *
      * @param int $v new value
-     * @return Character The current object (for fluent API support)
+     * @return Game The current object (for fluent API support)
      */
     public function setId($v)
     {
@@ -240,7 +224,7 @@ abstract class BaseCharacter extends BaseObject implements Persistent
 
         if ($this->id !== $v) {
             $this->id = $v;
-            $this->modifiedColumns[] = CharacterPeer::ID;
+            $this->modifiedColumns[] = GamePeer::ID;
         }
 
 
@@ -251,7 +235,7 @@ abstract class BaseCharacter extends BaseObject implements Persistent
      * Set the value of [name] column.
      *
      * @param string $v new value
-     * @return Character The current object (for fluent API support)
+     * @return Game The current object (for fluent API support)
      */
     public function setName($v)
     {
@@ -261,7 +245,7 @@ abstract class BaseCharacter extends BaseObject implements Persistent
 
         if ($this->name !== $v) {
             $this->name = $v;
-            $this->modifiedColumns[] = CharacterPeer::NAME;
+            $this->modifiedColumns[] = GamePeer::NAME;
         }
 
 
@@ -269,172 +253,159 @@ abstract class BaseCharacter extends BaseObject implements Persistent
     } // setName()
 
     /**
-     * Set the value of [power] column.
-     *
-     * @param string $v new value
-     * @return Character The current object (for fluent API support)
-     */
-    public function setPower($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->power !== $v) {
-            $this->power = $v;
-            $this->modifiedColumns[] = CharacterPeer::POWER;
-        }
-
-
-        return $this;
-    } // setPower()
-
-    /**
-     * Set the value of [power_one_per_game] column.
-     *
-     * @param string $v new value
-     * @return Character The current object (for fluent API support)
-     */
-    public function setPowerOnePerGame($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->power_one_per_game !== $v) {
-            $this->power_one_per_game = $v;
-            $this->modifiedColumns[] = CharacterPeer::POWER_ONE_PER_GAME;
-        }
-
-
-        return $this;
-    } // setPowerOnePerGame()
-
-    /**
-     * Set the value of [drawback] column.
-     *
-     * @param string $v new value
-     * @return Character The current object (for fluent API support)
-     */
-    public function setDrawback($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->drawback !== $v) {
-            $this->drawback = $v;
-            $this->modifiedColumns[] = CharacterPeer::DRAWBACK;
-        }
-
-
-        return $this;
-    } // setDrawback()
-
-    /**
-     * Set the value of [cards] column.
-     *
-     * @param string $v new value
-     * @return Character The current object (for fluent API support)
-     */
-    public function setCards($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->cards !== $v) {
-            $this->cards = $v;
-            $this->modifiedColumns[] = CharacterPeer::CARDS;
-        }
-
-
-        return $this;
-    } // setCards()
-
-    /**
-     * Set the value of [role] column.
-     *
-     * @param string $v new value
-     * @return Character The current object (for fluent API support)
-     */
-    public function setRole($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->role !== $v) {
-            $this->role = $v;
-            $this->modifiedColumns[] = CharacterPeer::ROLE;
-        }
-
-
-        return $this;
-    } // setRole()
-
-    /**
-     * Set the value of [amiral_order] column.
+     * Set the value of [fuel] column.
      *
      * @param int $v new value
-     * @return Character The current object (for fluent API support)
+     * @return Game The current object (for fluent API support)
      */
-    public function setAmiralOrder($v)
+    public function setFuel($v)
     {
         if ($v !== null) {
             $v = (int) $v;
         }
 
-        if ($this->amiral_order !== $v) {
-            $this->amiral_order = $v;
-            $this->modifiedColumns[] = CharacterPeer::AMIRAL_ORDER;
+        if ($this->fuel !== $v) {
+            $this->fuel = $v;
+            $this->modifiedColumns[] = GamePeer::FUEL;
         }
 
 
         return $this;
-    } // setAmiralOrder()
+    } // setFuel()
 
     /**
-     * Set the value of [president_order] column.
+     * Set the value of [food] column.
      *
      * @param int $v new value
-     * @return Character The current object (for fluent API support)
+     * @return Game The current object (for fluent API support)
      */
-    public function setPresidentOrder($v)
+    public function setFood($v)
     {
         if ($v !== null) {
             $v = (int) $v;
         }
 
-        if ($this->president_order !== $v) {
-            $this->president_order = $v;
-            $this->modifiedColumns[] = CharacterPeer::PRESIDENT_ORDER;
+        if ($this->food !== $v) {
+            $this->food = $v;
+            $this->modifiedColumns[] = GamePeer::FOOD;
         }
 
 
         return $this;
-    } // setPresidentOrder()
+    } // setFood()
 
     /**
-     * Set the value of [cag_order] column.
+     * Set the value of [morale] column.
      *
      * @param int $v new value
-     * @return Character The current object (for fluent API support)
+     * @return Game The current object (for fluent API support)
      */
-    public function setCagOrder($v)
+    public function setMorale($v)
     {
         if ($v !== null) {
             $v = (int) $v;
         }
 
-        if ($this->cag_order !== $v) {
-            $this->cag_order = $v;
-            $this->modifiedColumns[] = CharacterPeer::CAG_ORDER;
+        if ($this->morale !== $v) {
+            $this->morale = $v;
+            $this->modifiedColumns[] = GamePeer::MORALE;
         }
 
 
         return $this;
-    } // setCagOrder()
+    } // setMorale()
+
+    /**
+     * Set the value of [population] column.
+     *
+     * @param int $v new value
+     * @return Game The current object (for fluent API support)
+     */
+    public function setPopulation($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->population !== $v) {
+            $this->population = $v;
+            $this->modifiedColumns[] = GamePeer::POPULATION;
+        }
+
+
+        return $this;
+    } // setPopulation()
+
+    /**
+     * Set the value of [distance] column.
+     *
+     * @param int $v new value
+     * @return Game The current object (for fluent API support)
+     */
+    public function setDistance($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->distance !== $v) {
+            $this->distance = $v;
+            $this->modifiedColumns[] = GamePeer::DISTANCE;
+        }
+
+
+        return $this;
+    } // setDistance()
+
+    /**
+     * Set the value of [jump] column.
+     *
+     * @param int $v new value
+     * @return Game The current object (for fluent API support)
+     */
+    public function setJump($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->jump !== $v) {
+            $this->jump = $v;
+            $this->modifiedColumns[] = GamePeer::JUMP;
+        }
+
+
+        return $this;
+    } // setJump()
+
+    /**
+     * Sets the value of the [is_completed] column.
+     * Non-boolean arguments are converted using the following rules:
+     *   * 1, '1', 'true',  'on',  and 'yes' are converted to boolean true
+     *   * 0, '0', 'false', 'off', and 'no'  are converted to boolean false
+     * Check on string values is case insensitive (so 'FaLsE' is seen as 'false').
+     *
+     * @param boolean|integer|string $v The new value
+     * @return Game The current object (for fluent API support)
+     */
+    public function setIsCompleted($v)
+    {
+        if ($v !== null) {
+            if (is_string($v)) {
+                $v = in_array(strtolower($v), array('false', 'off', '-', 'no', 'n', '0', '')) ? false : true;
+            } else {
+                $v = (boolean) $v;
+            }
+        }
+
+        if ($this->is_completed !== $v) {
+            $this->is_completed = $v;
+            $this->modifiedColumns[] = GamePeer::IS_COMPLETED;
+        }
+
+
+        return $this;
+    } // setIsCompleted()
 
     /**
      * Indicates whether the columns in this object are only set to default values.
@@ -470,14 +441,13 @@ abstract class BaseCharacter extends BaseObject implements Persistent
 
             $this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
             $this->name = ($row[$startcol + 1] !== null) ? (string) $row[$startcol + 1] : null;
-            $this->power = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
-            $this->power_one_per_game = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
-            $this->drawback = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
-            $this->cards = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
-            $this->role = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
-            $this->amiral_order = ($row[$startcol + 7] !== null) ? (int) $row[$startcol + 7] : null;
-            $this->president_order = ($row[$startcol + 8] !== null) ? (int) $row[$startcol + 8] : null;
-            $this->cag_order = ($row[$startcol + 9] !== null) ? (int) $row[$startcol + 9] : null;
+            $this->fuel = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
+            $this->food = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
+            $this->morale = ($row[$startcol + 4] !== null) ? (int) $row[$startcol + 4] : null;
+            $this->population = ($row[$startcol + 5] !== null) ? (int) $row[$startcol + 5] : null;
+            $this->distance = ($row[$startcol + 6] !== null) ? (int) $row[$startcol + 6] : null;
+            $this->jump = ($row[$startcol + 7] !== null) ? (int) $row[$startcol + 7] : null;
+            $this->is_completed = ($row[$startcol + 8] !== null) ? (boolean) $row[$startcol + 8] : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -486,10 +456,10 @@ abstract class BaseCharacter extends BaseObject implements Persistent
                 $this->ensureConsistency();
             }
 
-            return $startcol + 10; // 10 = CharacterPeer::NUM_HYDRATE_COLUMNS.
+            return $startcol + 9; // 9 = GamePeer::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
-            throw new PropelException("Error populating Character object", $e);
+            throw new PropelException("Error populating Game object", $e);
         }
     }
 
@@ -532,13 +502,13 @@ abstract class BaseCharacter extends BaseObject implements Persistent
         }
 
         if ($con === null) {
-            $con = Propel::getConnection(CharacterPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+            $con = Propel::getConnection(GamePeer::DATABASE_NAME, Propel::CONNECTION_READ);
         }
 
         // We don't need to alter the object instance pool; we're just modifying this instance
         // already in the pool.
 
-        $stmt = CharacterPeer::doSelectStmt($this->buildPkeyCriteria(), $con);
+        $stmt = GamePeer::doSelectStmt($this->buildPkeyCriteria(), $con);
         $row = $stmt->fetch(PDO::FETCH_NUM);
         $stmt->closeCursor();
         if (!$row) {
@@ -570,12 +540,12 @@ abstract class BaseCharacter extends BaseObject implements Persistent
         }
 
         if ($con === null) {
-            $con = Propel::getConnection(CharacterPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+            $con = Propel::getConnection(GamePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
         }
 
         $con->beginTransaction();
         try {
-            $deleteQuery = CharacterQuery::create()
+            $deleteQuery = GameQuery::create()
                 ->filterByPrimaryKey($this->getPrimaryKey());
             $ret = $this->preDelete($con);
             if ($ret) {
@@ -613,7 +583,7 @@ abstract class BaseCharacter extends BaseObject implements Persistent
         }
 
         if ($con === null) {
-            $con = Propel::getConnection(CharacterPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+            $con = Propel::getConnection(GamePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
         }
 
         $con->beginTransaction();
@@ -633,7 +603,7 @@ abstract class BaseCharacter extends BaseObject implements Persistent
                     $this->postUpdate($con);
                 }
                 $this->postSave($con);
-                CharacterPeer::addInstanceToPool($this);
+                GamePeer::addInstanceToPool($this);
             } else {
                 $affectedRows = 0;
             }
@@ -676,10 +646,9 @@ abstract class BaseCharacter extends BaseObject implements Persistent
 
             if ($this->gamePlayersScheduledForDeletion !== null) {
                 if (!$this->gamePlayersScheduledForDeletion->isEmpty()) {
-                    foreach ($this->gamePlayersScheduledForDeletion as $gamePlayer) {
-                        // need to save related object because we set the relation to null
-                        $gamePlayer->save($con);
-                    }
+                    GamePlayerQuery::create()
+                        ->filterByPrimaryKeys($this->gamePlayersScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
                     $this->gamePlayersScheduledForDeletion = null;
                 }
             }
@@ -712,45 +681,42 @@ abstract class BaseCharacter extends BaseObject implements Persistent
         $modifiedColumns = array();
         $index = 0;
 
-        $this->modifiedColumns[] = CharacterPeer::ID;
+        $this->modifiedColumns[] = GamePeer::ID;
         if (null !== $this->id) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key (' . CharacterPeer::ID . ')');
+            throw new PropelException('Cannot insert a value for auto-increment primary key (' . GamePeer::ID . ')');
         }
 
          // check the columns in natural order for more readable SQL queries
-        if ($this->isColumnModified(CharacterPeer::ID)) {
+        if ($this->isColumnModified(GamePeer::ID)) {
             $modifiedColumns[':p' . $index++]  = '`ID`';
         }
-        if ($this->isColumnModified(CharacterPeer::NAME)) {
+        if ($this->isColumnModified(GamePeer::NAME)) {
             $modifiedColumns[':p' . $index++]  = '`NAME`';
         }
-        if ($this->isColumnModified(CharacterPeer::POWER)) {
-            $modifiedColumns[':p' . $index++]  = '`POWER`';
+        if ($this->isColumnModified(GamePeer::FUEL)) {
+            $modifiedColumns[':p' . $index++]  = '`FUEL`';
         }
-        if ($this->isColumnModified(CharacterPeer::POWER_ONE_PER_GAME)) {
-            $modifiedColumns[':p' . $index++]  = '`POWER_ONE_PER_GAME`';
+        if ($this->isColumnModified(GamePeer::FOOD)) {
+            $modifiedColumns[':p' . $index++]  = '`FOOD`';
         }
-        if ($this->isColumnModified(CharacterPeer::DRAWBACK)) {
-            $modifiedColumns[':p' . $index++]  = '`DRAWBACK`';
+        if ($this->isColumnModified(GamePeer::MORALE)) {
+            $modifiedColumns[':p' . $index++]  = '`MORALE`';
         }
-        if ($this->isColumnModified(CharacterPeer::CARDS)) {
-            $modifiedColumns[':p' . $index++]  = '`CARDS`';
+        if ($this->isColumnModified(GamePeer::POPULATION)) {
+            $modifiedColumns[':p' . $index++]  = '`POPULATION`';
         }
-        if ($this->isColumnModified(CharacterPeer::ROLE)) {
-            $modifiedColumns[':p' . $index++]  = '`ROLE`';
+        if ($this->isColumnModified(GamePeer::DISTANCE)) {
+            $modifiedColumns[':p' . $index++]  = '`DISTANCE`';
         }
-        if ($this->isColumnModified(CharacterPeer::AMIRAL_ORDER)) {
-            $modifiedColumns[':p' . $index++]  = '`AMIRAL_ORDER`';
+        if ($this->isColumnModified(GamePeer::JUMP)) {
+            $modifiedColumns[':p' . $index++]  = '`JUMP`';
         }
-        if ($this->isColumnModified(CharacterPeer::PRESIDENT_ORDER)) {
-            $modifiedColumns[':p' . $index++]  = '`PRESIDENT_ORDER`';
-        }
-        if ($this->isColumnModified(CharacterPeer::CAG_ORDER)) {
-            $modifiedColumns[':p' . $index++]  = '`CAG_ORDER`';
+        if ($this->isColumnModified(GamePeer::IS_COMPLETED)) {
+            $modifiedColumns[':p' . $index++]  = '`IS_COMPLETED`';
         }
 
         $sql = sprintf(
-            'INSERT INTO `character` (%s) VALUES (%s)',
+            'INSERT INTO `game` (%s) VALUES (%s)',
             implode(', ', $modifiedColumns),
             implode(', ', array_keys($modifiedColumns))
         );
@@ -765,29 +731,26 @@ abstract class BaseCharacter extends BaseObject implements Persistent
                     case '`NAME`':
                         $stmt->bindValue($identifier, $this->name, PDO::PARAM_STR);
                         break;
-                    case '`POWER`':
-                        $stmt->bindValue($identifier, $this->power, PDO::PARAM_STR);
+                    case '`FUEL`':
+                        $stmt->bindValue($identifier, $this->fuel, PDO::PARAM_INT);
                         break;
-                    case '`POWER_ONE_PER_GAME`':
-                        $stmt->bindValue($identifier, $this->power_one_per_game, PDO::PARAM_STR);
+                    case '`FOOD`':
+                        $stmt->bindValue($identifier, $this->food, PDO::PARAM_INT);
                         break;
-                    case '`DRAWBACK`':
-                        $stmt->bindValue($identifier, $this->drawback, PDO::PARAM_STR);
+                    case '`MORALE`':
+                        $stmt->bindValue($identifier, $this->morale, PDO::PARAM_INT);
                         break;
-                    case '`CARDS`':
-                        $stmt->bindValue($identifier, $this->cards, PDO::PARAM_STR);
+                    case '`POPULATION`':
+                        $stmt->bindValue($identifier, $this->population, PDO::PARAM_INT);
                         break;
-                    case '`ROLE`':
-                        $stmt->bindValue($identifier, $this->role, PDO::PARAM_STR);
+                    case '`DISTANCE`':
+                        $stmt->bindValue($identifier, $this->distance, PDO::PARAM_INT);
                         break;
-                    case '`AMIRAL_ORDER`':
-                        $stmt->bindValue($identifier, $this->amiral_order, PDO::PARAM_INT);
+                    case '`JUMP`':
+                        $stmt->bindValue($identifier, $this->jump, PDO::PARAM_INT);
                         break;
-                    case '`PRESIDENT_ORDER`':
-                        $stmt->bindValue($identifier, $this->president_order, PDO::PARAM_INT);
-                        break;
-                    case '`CAG_ORDER`':
-                        $stmt->bindValue($identifier, $this->cag_order, PDO::PARAM_INT);
+                    case '`IS_COMPLETED`':
+                        $stmt->bindValue($identifier, (int) $this->is_completed, PDO::PARAM_INT);
                         break;
                 }
             }
@@ -883,7 +846,7 @@ abstract class BaseCharacter extends BaseObject implements Persistent
             $failureMap = array();
 
 
-            if (($retval = CharacterPeer::doValidate($this, $columns)) !== true) {
+            if (($retval = GamePeer::doValidate($this, $columns)) !== true) {
                 $failureMap = array_merge($failureMap, $retval);
             }
 
@@ -915,7 +878,7 @@ abstract class BaseCharacter extends BaseObject implements Persistent
      */
     public function getByName($name, $type = BasePeer::TYPE_PHPNAME)
     {
-        $pos = CharacterPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+        $pos = GamePeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
         $field = $this->getByPosition($pos);
 
         return $field;
@@ -938,28 +901,25 @@ abstract class BaseCharacter extends BaseObject implements Persistent
                 return $this->getName();
                 break;
             case 2:
-                return $this->getPower();
+                return $this->getFuel();
                 break;
             case 3:
-                return $this->getPowerOnePerGame();
+                return $this->getFood();
                 break;
             case 4:
-                return $this->getDrawback();
+                return $this->getMorale();
                 break;
             case 5:
-                return $this->getCards();
+                return $this->getPopulation();
                 break;
             case 6:
-                return $this->getRole();
+                return $this->getDistance();
                 break;
             case 7:
-                return $this->getAmiralOrder();
+                return $this->getJump();
                 break;
             case 8:
-                return $this->getPresidentOrder();
-                break;
-            case 9:
-                return $this->getCagOrder();
+                return $this->getIsCompleted();
                 break;
             default:
                 return null;
@@ -984,22 +944,21 @@ abstract class BaseCharacter extends BaseObject implements Persistent
      */
     public function toArray($keyType = BasePeer::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array(), $includeForeignObjects = false)
     {
-        if (isset($alreadyDumpedObjects['Character'][$this->getPrimaryKey()])) {
+        if (isset($alreadyDumpedObjects['Game'][$this->getPrimaryKey()])) {
             return '*RECURSION*';
         }
-        $alreadyDumpedObjects['Character'][$this->getPrimaryKey()] = true;
-        $keys = CharacterPeer::getFieldNames($keyType);
+        $alreadyDumpedObjects['Game'][$this->getPrimaryKey()] = true;
+        $keys = GamePeer::getFieldNames($keyType);
         $result = array(
             $keys[0] => $this->getId(),
             $keys[1] => $this->getName(),
-            $keys[2] => $this->getPower(),
-            $keys[3] => $this->getPowerOnePerGame(),
-            $keys[4] => $this->getDrawback(),
-            $keys[5] => $this->getCards(),
-            $keys[6] => $this->getRole(),
-            $keys[7] => $this->getAmiralOrder(),
-            $keys[8] => $this->getPresidentOrder(),
-            $keys[9] => $this->getCagOrder(),
+            $keys[2] => $this->getFuel(),
+            $keys[3] => $this->getFood(),
+            $keys[4] => $this->getMorale(),
+            $keys[5] => $this->getPopulation(),
+            $keys[6] => $this->getDistance(),
+            $keys[7] => $this->getJump(),
+            $keys[8] => $this->getIsCompleted(),
         );
         if ($includeForeignObjects) {
             if (null !== $this->collGamePlayers) {
@@ -1023,7 +982,7 @@ abstract class BaseCharacter extends BaseObject implements Persistent
      */
     public function setByName($name, $value, $type = BasePeer::TYPE_PHPNAME)
     {
-        $pos = CharacterPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+        $pos = GamePeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
 
         $this->setByPosition($pos, $value);
     }
@@ -1046,28 +1005,25 @@ abstract class BaseCharacter extends BaseObject implements Persistent
                 $this->setName($value);
                 break;
             case 2:
-                $this->setPower($value);
+                $this->setFuel($value);
                 break;
             case 3:
-                $this->setPowerOnePerGame($value);
+                $this->setFood($value);
                 break;
             case 4:
-                $this->setDrawback($value);
+                $this->setMorale($value);
                 break;
             case 5:
-                $this->setCards($value);
+                $this->setPopulation($value);
                 break;
             case 6:
-                $this->setRole($value);
+                $this->setDistance($value);
                 break;
             case 7:
-                $this->setAmiralOrder($value);
+                $this->setJump($value);
                 break;
             case 8:
-                $this->setPresidentOrder($value);
-                break;
-            case 9:
-                $this->setCagOrder($value);
+                $this->setIsCompleted($value);
                 break;
         } // switch()
     }
@@ -1091,18 +1047,17 @@ abstract class BaseCharacter extends BaseObject implements Persistent
      */
     public function fromArray($arr, $keyType = BasePeer::TYPE_PHPNAME)
     {
-        $keys = CharacterPeer::getFieldNames($keyType);
+        $keys = GamePeer::getFieldNames($keyType);
 
         if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
         if (array_key_exists($keys[1], $arr)) $this->setName($arr[$keys[1]]);
-        if (array_key_exists($keys[2], $arr)) $this->setPower($arr[$keys[2]]);
-        if (array_key_exists($keys[3], $arr)) $this->setPowerOnePerGame($arr[$keys[3]]);
-        if (array_key_exists($keys[4], $arr)) $this->setDrawback($arr[$keys[4]]);
-        if (array_key_exists($keys[5], $arr)) $this->setCards($arr[$keys[5]]);
-        if (array_key_exists($keys[6], $arr)) $this->setRole($arr[$keys[6]]);
-        if (array_key_exists($keys[7], $arr)) $this->setAmiralOrder($arr[$keys[7]]);
-        if (array_key_exists($keys[8], $arr)) $this->setPresidentOrder($arr[$keys[8]]);
-        if (array_key_exists($keys[9], $arr)) $this->setCagOrder($arr[$keys[9]]);
+        if (array_key_exists($keys[2], $arr)) $this->setFuel($arr[$keys[2]]);
+        if (array_key_exists($keys[3], $arr)) $this->setFood($arr[$keys[3]]);
+        if (array_key_exists($keys[4], $arr)) $this->setMorale($arr[$keys[4]]);
+        if (array_key_exists($keys[5], $arr)) $this->setPopulation($arr[$keys[5]]);
+        if (array_key_exists($keys[6], $arr)) $this->setDistance($arr[$keys[6]]);
+        if (array_key_exists($keys[7], $arr)) $this->setJump($arr[$keys[7]]);
+        if (array_key_exists($keys[8], $arr)) $this->setIsCompleted($arr[$keys[8]]);
     }
 
     /**
@@ -1112,18 +1067,17 @@ abstract class BaseCharacter extends BaseObject implements Persistent
      */
     public function buildCriteria()
     {
-        $criteria = new Criteria(CharacterPeer::DATABASE_NAME);
+        $criteria = new Criteria(GamePeer::DATABASE_NAME);
 
-        if ($this->isColumnModified(CharacterPeer::ID)) $criteria->add(CharacterPeer::ID, $this->id);
-        if ($this->isColumnModified(CharacterPeer::NAME)) $criteria->add(CharacterPeer::NAME, $this->name);
-        if ($this->isColumnModified(CharacterPeer::POWER)) $criteria->add(CharacterPeer::POWER, $this->power);
-        if ($this->isColumnModified(CharacterPeer::POWER_ONE_PER_GAME)) $criteria->add(CharacterPeer::POWER_ONE_PER_GAME, $this->power_one_per_game);
-        if ($this->isColumnModified(CharacterPeer::DRAWBACK)) $criteria->add(CharacterPeer::DRAWBACK, $this->drawback);
-        if ($this->isColumnModified(CharacterPeer::CARDS)) $criteria->add(CharacterPeer::CARDS, $this->cards);
-        if ($this->isColumnModified(CharacterPeer::ROLE)) $criteria->add(CharacterPeer::ROLE, $this->role);
-        if ($this->isColumnModified(CharacterPeer::AMIRAL_ORDER)) $criteria->add(CharacterPeer::AMIRAL_ORDER, $this->amiral_order);
-        if ($this->isColumnModified(CharacterPeer::PRESIDENT_ORDER)) $criteria->add(CharacterPeer::PRESIDENT_ORDER, $this->president_order);
-        if ($this->isColumnModified(CharacterPeer::CAG_ORDER)) $criteria->add(CharacterPeer::CAG_ORDER, $this->cag_order);
+        if ($this->isColumnModified(GamePeer::ID)) $criteria->add(GamePeer::ID, $this->id);
+        if ($this->isColumnModified(GamePeer::NAME)) $criteria->add(GamePeer::NAME, $this->name);
+        if ($this->isColumnModified(GamePeer::FUEL)) $criteria->add(GamePeer::FUEL, $this->fuel);
+        if ($this->isColumnModified(GamePeer::FOOD)) $criteria->add(GamePeer::FOOD, $this->food);
+        if ($this->isColumnModified(GamePeer::MORALE)) $criteria->add(GamePeer::MORALE, $this->morale);
+        if ($this->isColumnModified(GamePeer::POPULATION)) $criteria->add(GamePeer::POPULATION, $this->population);
+        if ($this->isColumnModified(GamePeer::DISTANCE)) $criteria->add(GamePeer::DISTANCE, $this->distance);
+        if ($this->isColumnModified(GamePeer::JUMP)) $criteria->add(GamePeer::JUMP, $this->jump);
+        if ($this->isColumnModified(GamePeer::IS_COMPLETED)) $criteria->add(GamePeer::IS_COMPLETED, $this->is_completed);
 
         return $criteria;
     }
@@ -1138,8 +1092,8 @@ abstract class BaseCharacter extends BaseObject implements Persistent
      */
     public function buildPkeyCriteria()
     {
-        $criteria = new Criteria(CharacterPeer::DATABASE_NAME);
-        $criteria->add(CharacterPeer::ID, $this->id);
+        $criteria = new Criteria(GamePeer::DATABASE_NAME);
+        $criteria->add(GamePeer::ID, $this->id);
 
         return $criteria;
     }
@@ -1180,7 +1134,7 @@ abstract class BaseCharacter extends BaseObject implements Persistent
      * If desired, this method can also make copies of all associated (fkey referrers)
      * objects.
      *
-     * @param object $copyObj An object of Character (or compatible) type.
+     * @param object $copyObj An object of Game (or compatible) type.
      * @param boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
      * @param boolean $makeNew Whether to reset autoincrement PKs and make the object new.
      * @throws PropelException
@@ -1188,14 +1142,13 @@ abstract class BaseCharacter extends BaseObject implements Persistent
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
         $copyObj->setName($this->getName());
-        $copyObj->setPower($this->getPower());
-        $copyObj->setPowerOnePerGame($this->getPowerOnePerGame());
-        $copyObj->setDrawback($this->getDrawback());
-        $copyObj->setCards($this->getCards());
-        $copyObj->setRole($this->getRole());
-        $copyObj->setAmiralOrder($this->getAmiralOrder());
-        $copyObj->setPresidentOrder($this->getPresidentOrder());
-        $copyObj->setCagOrder($this->getCagOrder());
+        $copyObj->setFuel($this->getFuel());
+        $copyObj->setFood($this->getFood());
+        $copyObj->setMorale($this->getMorale());
+        $copyObj->setPopulation($this->getPopulation());
+        $copyObj->setDistance($this->getDistance());
+        $copyObj->setJump($this->getJump());
+        $copyObj->setIsCompleted($this->getIsCompleted());
 
         if ($deepCopy && !$this->startCopy) {
             // important: temporarily setNew(false) because this affects the behavior of
@@ -1229,7 +1182,7 @@ abstract class BaseCharacter extends BaseObject implements Persistent
      * objects.
      *
      * @param boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-     * @return Character Clone of current object.
+     * @return Game Clone of current object.
      * @throws PropelException
      */
     public function copy($deepCopy = false)
@@ -1249,12 +1202,12 @@ abstract class BaseCharacter extends BaseObject implements Persistent
      * same instance for all member of this class. The method could therefore
      * be static, but this would prevent one from overriding the behavior.
      *
-     * @return CharacterPeer
+     * @return GamePeer
      */
     public function getPeer()
     {
         if (self::$peer === null) {
-            self::$peer = new CharacterPeer();
+            self::$peer = new GamePeer();
         }
 
         return self::$peer;
@@ -1328,7 +1281,7 @@ abstract class BaseCharacter extends BaseObject implements Persistent
      * If the $criteria is not null, it is used to always fetch the results from the database.
      * Otherwise the results are fetched from the database the first time, then cached.
      * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this Character is new, it will return
+     * If this Game is new, it will return
      * an empty collection or the current collection; the criteria is ignored on a new object.
      *
      * @param Criteria $criteria optional Criteria object to narrow the query
@@ -1345,7 +1298,7 @@ abstract class BaseCharacter extends BaseObject implements Persistent
                 $this->initGamePlayers();
             } else {
                 $collGamePlayers = GamePlayerQuery::create(null, $criteria)
-                    ->filterByCharacter($this)
+                    ->filterByGame($this)
                     ->find($con);
                 if (null !== $criteria) {
                     if (false !== $this->collGamePlayersPartial && count($collGamePlayers)) {
@@ -1393,7 +1346,7 @@ abstract class BaseCharacter extends BaseObject implements Persistent
         $this->gamePlayersScheduledForDeletion = $this->getGamePlayers(new Criteria(), $con)->diff($gamePlayers);
 
         foreach ($this->gamePlayersScheduledForDeletion as $gamePlayerRemoved) {
-            $gamePlayerRemoved->setCharacter(null);
+            $gamePlayerRemoved->setGame(null);
         }
 
         $this->collGamePlayers = null;
@@ -1430,7 +1383,7 @@ abstract class BaseCharacter extends BaseObject implements Persistent
                 }
 
                 return $query
-                    ->filterByCharacter($this)
+                    ->filterByGame($this)
                     ->count($con);
             }
         } else {
@@ -1443,7 +1396,7 @@ abstract class BaseCharacter extends BaseObject implements Persistent
      * through the GamePlayer foreign key attribute.
      *
      * @param    GamePlayer $l GamePlayer
-     * @return Character The current object (for fluent API support)
+     * @return Game The current object (for fluent API support)
      */
     public function addGamePlayer(GamePlayer $l)
     {
@@ -1464,7 +1417,7 @@ abstract class BaseCharacter extends BaseObject implements Persistent
     protected function doAddGamePlayer($gamePlayer)
     {
         $this->collGamePlayers[]= $gamePlayer;
-        $gamePlayer->setCharacter($this);
+        $gamePlayer->setGame($this);
     }
 
     /**
@@ -1479,7 +1432,7 @@ abstract class BaseCharacter extends BaseObject implements Persistent
                 $this->gamePlayersScheduledForDeletion->clear();
             }
             $this->gamePlayersScheduledForDeletion[]= $gamePlayer;
-            $gamePlayer->setCharacter(null);
+            $gamePlayer->setGame(null);
         }
     }
 
@@ -1487,38 +1440,13 @@ abstract class BaseCharacter extends BaseObject implements Persistent
     /**
      * If this collection has already been initialized with
      * an identical criteria, it returns the collection.
-     * Otherwise if this Character is new, it will return
-     * an empty collection; or if this Character has previously
+     * Otherwise if this Game is new, it will return
+     * an empty collection; or if this Game has previously
      * been saved, it will retrieve related GamePlayers from storage.
      *
      * This method is protected by default in order to keep the public
      * api reasonable.  You can provide public methods for those you
-     * actually need in Character.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return PropelObjectCollection|GamePlayer[] List of GamePlayer objects
-     */
-    public function getGamePlayersJoinGame($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        $query = GamePlayerQuery::create(null, $criteria);
-        $query->joinWith('Game', $join_behavior);
-
-        return $this->getGamePlayers($query, $con);
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this Character is new, it will return
-     * an empty collection; or if this Character has previously
-     * been saved, it will retrieve related GamePlayers from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in Character.
+     * actually need in Game.
      *
      * @param Criteria $criteria optional Criteria object to narrow the query
      * @param PropelPDO $con optional connection object
@@ -1533,6 +1461,31 @@ abstract class BaseCharacter extends BaseObject implements Persistent
         return $this->getGamePlayers($query, $con);
     }
 
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Game is new, it will return
+     * an empty collection; or if this Game has previously
+     * been saved, it will retrieve related GamePlayers from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Game.
+     *
+     * @param Criteria $criteria optional Criteria object to narrow the query
+     * @param PropelPDO $con optional connection object
+     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return PropelObjectCollection|GamePlayer[] List of GamePlayer objects
+     */
+    public function getGamePlayersJoinCharacter($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+    {
+        $query = GamePlayerQuery::create(null, $criteria);
+        $query->joinWith('Character', $join_behavior);
+
+        return $this->getGamePlayers($query, $con);
+    }
+
     /**
      * Clears the current object and sets all attributes to their default values
      */
@@ -1540,14 +1493,13 @@ abstract class BaseCharacter extends BaseObject implements Persistent
     {
         $this->id = null;
         $this->name = null;
-        $this->power = null;
-        $this->power_one_per_game = null;
-        $this->drawback = null;
-        $this->cards = null;
-        $this->role = null;
-        $this->amiral_order = null;
-        $this->president_order = null;
-        $this->cag_order = null;
+        $this->fuel = null;
+        $this->food = null;
+        $this->morale = null;
+        $this->population = null;
+        $this->distance = null;
+        $this->jump = null;
+        $this->is_completed = null;
         $this->alreadyInSave = false;
         $this->alreadyInValidation = false;
         $this->clearAllReferences();
@@ -1584,11 +1536,11 @@ abstract class BaseCharacter extends BaseObject implements Persistent
     /**
      * return the string representation of this object
      *
-     * @return string The value of the 'name' column
+     * @return string
      */
     public function __toString()
     {
-        return (string) $this->getName();
+        return (string) $this->exportTo(GamePeer::DEFAULT_STRING_FORMAT);
     }
 
     /**

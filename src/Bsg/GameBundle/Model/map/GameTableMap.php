@@ -7,7 +7,7 @@ use \TableMap;
 
 
 /**
- * This class defines the structure of the 'character' table.
+ * This class defines the structure of the 'game' table.
  *
  *
  *
@@ -18,13 +18,13 @@ use \TableMap;
  *
  * @package    propel.generator.src.Bsg.GameBundle.Model.map
  */
-class CharacterTableMap extends TableMap
+class GameTableMap extends TableMap
 {
 
     /**
      * The (dot-path) name of this class
      */
-    const CLASS_NAME = 'src.Bsg.GameBundle.Model.map.CharacterTableMap';
+    const CLASS_NAME = 'src.Bsg.GameBundle.Model.map.GameTableMap';
 
     /**
      * Initialize the table attributes, columns and validators
@@ -36,23 +36,21 @@ class CharacterTableMap extends TableMap
     public function initialize()
     {
         // attributes
-        $this->setName('character');
-        $this->setPhpName('Character');
-        $this->setClassname('Bsg\\GameBundle\\Model\\Character');
+        $this->setName('game');
+        $this->setPhpName('Game');
+        $this->setClassname('Bsg\\GameBundle\\Model\\Game');
         $this->setPackage('src.Bsg.GameBundle.Model');
         $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('ID', 'Id', 'INTEGER', true, null, null);
         $this->addColumn('NAME', 'Name', 'VARCHAR', false, 40, null);
-        $this->getColumn('NAME', false)->setPrimaryString(true);
-        $this->addColumn('POWER', 'Power', 'VARCHAR', false, 40, null);
-        $this->addColumn('POWER_ONE_PER_GAME', 'PowerOnePerGame', 'VARCHAR', false, 40, null);
-        $this->addColumn('DRAWBACK', 'Drawback', 'VARCHAR', false, 40, null);
-        $this->addColumn('CARDS', 'Cards', 'VARCHAR', false, 40, null);
-        $this->addColumn('ROLE', 'Role', 'VARCHAR', false, 40, null);
-        $this->addColumn('AMIRAL_ORDER', 'AmiralOrder', 'INTEGER', false, null, null);
-        $this->addColumn('PRESIDENT_ORDER', 'PresidentOrder', 'INTEGER', false, null, null);
-        $this->addColumn('CAG_ORDER', 'CagOrder', 'INTEGER', false, null, null);
+        $this->addColumn('FUEL', 'Fuel', 'INTEGER', false, null, null);
+        $this->addColumn('FOOD', 'Food', 'INTEGER', false, null, null);
+        $this->addColumn('MORALE', 'Morale', 'INTEGER', false, null, null);
+        $this->addColumn('POPULATION', 'Population', 'INTEGER', false, null, null);
+        $this->addColumn('DISTANCE', 'Distance', 'INTEGER', false, null, null);
+        $this->addColumn('JUMP', 'Jump', 'INTEGER', false, null, null);
+        $this->addColumn('IS_COMPLETED', 'IsCompleted', 'BOOLEAN', false, 1, null);
         // validators
     } // initialize()
 
@@ -61,7 +59,7 @@ class CharacterTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('GamePlayer', 'Bsg\\GameBundle\\Model\\GamePlayer', RelationMap::ONE_TO_MANY, array('id' => 'character_id', ), null, null, 'GamePlayers');
+        $this->addRelation('GamePlayer', 'Bsg\\GameBundle\\Model\\GamePlayer', RelationMap::ONE_TO_MANY, array('id' => 'game_id', ), null, null, 'GamePlayers');
     } // buildRelations()
 
-} // CharacterTableMap
+} // GameTableMap
