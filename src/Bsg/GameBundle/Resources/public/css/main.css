@@ -4,6 +4,11 @@ body {
     text-align: center;
 }
 
+div.flash-error {
+    background-color: #E87676;
+    border: 1px solid #D91E1E;
+}
+
 header#user-bar {
     text-align: right;
     background-color: grey;

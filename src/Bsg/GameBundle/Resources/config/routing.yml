@@ -2,6 +2,14 @@ bsg_game_homepage:
     pattern:  /
     defaults: { _controller: BsgGameBundle:Home:index }
 
-bsg_game_gamepage:
+bsg_game_new_game:
+    pattern:  /newGame
+    defaults: { _controller: BsgGameBundle:Game:newGame }
+
+bsg_game_join_game:
+    pattern:  /joinGame
+    defaults: { _controller: BsgGameBundle:Game:joinGame }
+
+bsg_game_game_page:
     pattern:  /game/{gameId}
-    defaults: { _controller: BsgGameBundle:Game:index }
+    defaults: { _controller: BsgGameBundle:Game:resumeGame }

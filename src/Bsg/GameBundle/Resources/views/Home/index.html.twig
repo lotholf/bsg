@@ -5,5 +5,22 @@
 {% endblock %}
 
 {% block body %}
-    <a href="{{ path('bsg_game_gamepage', { 'gameId': 12 }) }}">Rejoignez une partie !</a>
+    {% if app.session.hasFlash('error') %}
+        <div class="flash-error">
+            {{ app.session.flash('error') }}
+        </div>
+    {% endif %}
+    {% if userInGame %}
+        <div>
+            <a href="{{ path('bsg_game_game_page', { 'gameId': currentGameId }) }}">Rejoindre votre partie en cours !</a>
+        </div>
+    {% else %}
+        <div>
+            <a href="{{ path('bsg_game_new_game') }}">Créer une nouvelle partie !</a>
+        </div>
+
+        <div>
+            <a href="{{ path('bsg_game_join_game') }}">Rejoindre une nouvelle partie !</a>
+        </div>
+    {% endif %}
 {% endblock %}
