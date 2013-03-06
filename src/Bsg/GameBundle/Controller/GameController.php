@@ -43,7 +43,7 @@ class GameController extends Controller
 
             $gamePlayer->save();
 
-            return $this->render('BsgGameBundle:Game:index.html.twig', array('game_id' => $game->getId()));
+            return $this->render('BsgGameBundle:Game:index.html.twig', array('game' => $game));
         }
         else
         {
@@ -80,7 +80,7 @@ class GameController extends Controller
 
                 $gamePlayer->save();
 
-                return $this->render('BsgGameBundle:Game:index.html.twig', array('game_id' => $game->getId()));
+                return $this->render('BsgGameBundle:Game:index.html.twig', array('game' => $game));
             } else {
                 $this->get('session')->setFlash(
                     'error',
@@ -110,7 +110,7 @@ class GameController extends Controller
         $currentGame = GameQuery::findCurrentGameWithUser($user);
         if($currentGame) {
             if($currentGame->getId() == $gameId) {
-                return $this->render('BsgGameBundle:Game:index.html.twig', array('game_id' => $gameId));
+                return $this->render('BsgGameBundle:Game:index.html.twig', array('game' => $currentGame));
             }
 
             $this->get('session')->setFlash(

@@ -15,18 +15,72 @@ header#user-bar {
     height: 30px;
 }
 
+/* Board */
 section#board {
     background-color: blue;
     height: 500px;
     width: 100%;
 }
 
+/* Game bar */
 section#game-bar {
+    text-align: left;
     background-color: black;
     width: 100%;
     height: 200px;
 }
 
+div#resources {
+    display: inline-block;
+    background-color: #cccccc;
+    border: 1px solid #FFFFFF;
+    text-align: right;
+    width: 150px;
+}
+
+div#progress-game {
+    display: inline-block;
+    width: 300px;
+}
+
+div#jump { 
+    font-size : 0;
+    background-color: #777777;
+    height: 50px;
+}
+
+div#distance {
+    background-color: #aaaaaa;
+}
+
+div.label-resource {
+    display: inline-block;
+    width: 120px;
+}
+
+div.value-resource {
+    display: inline-block;
+    width: 30px;
+}
+
+div.case {
+    margin: 0px;
+    background-color: #35379C;
+    display: inline-block;
+    border: 1px solid #000000;
+    width: 48px;
+    height: 48px;
+}
+
+div.current-case {
+    background-color: #E6A357
+}
+
+div.final-case {
+    background-color: #C9CF91
+}
+
+/* Chat */
 section#chat {
     background-color: red;
     height: 150px;

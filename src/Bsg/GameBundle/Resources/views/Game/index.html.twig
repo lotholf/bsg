@@ -7,12 +7,37 @@
 {% block body %}
     <section id="game-bar">
         {% block gameBar %}
+            <div id="resources">
+                <div class="resource">
+                    <div class="label-resource">Carburant :</div><div class="value-resource">{{game.fuel}}</div>
+                </div>
+                <div class="resource">
+                    <div class="label-resource">Ration :</div><div class="value-resource">{{game.food}}</div>
+                </div>
+                <div class="resource">
+                    <div class="label-resource">Moral :</div><div class="value-resource">{{game.morale}}</div>
+                </div>
+                <div class="resource">
+                    <div class="label-resource">Population :</div><div class="value-resource">{{game.population}}</div>
+                </div>
+            </div>
+            <div id="progress-game">
+                <div id="jump">
+                    {% for i in 0..4 %}
+                        <div class="case {% if game.jump == i %} current-case{% endif %}"></div>
+                    {% endfor %}
+                    <div class="case final-case"></div>
+                </div>
+                <div id="distance">
+                    <div class="label-resource">Distance :</div><div class="value-resource">{{game.distance}}</div>
+                </div>
+            </div>
         {% endblock %}
     </section>
 
     <section id="board">
         {% block board %}
-            Bienvenue dans la partie {{game_id}}
+            Bienvenue dans la partie {{game.id}}
         {% endblock %}
     </section>
 
